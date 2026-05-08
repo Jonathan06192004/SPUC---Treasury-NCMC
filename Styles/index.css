@@ -1,97 +1,118 @@
-/* General Reset */
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-}
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
 
 body {
-    background-color: #f4f7f6;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
+  min-height: 100vh;
+  background: #0a1e6e url('../Assets/BGTithes.png') center/cover no-repeat fixed;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-/* Login Box */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: rgba(10,30,110,0.6);
+  z-index: 0;
+}
+
 .login-container {
-    background-color: #ffffff;
-    padding: 2.5rem;
-    border-radius: 8px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-    width: 100%;
-    max-width: 400px;
+  position: relative;
+  z-index: 1;
+  background: rgba(255,255,255,0.97);
+  padding: 36px 32px 28px;
+  border-radius: 14px;
+  box-shadow: 0 16px 48px rgba(0,0,0,0.45);
+  width: 100%;
+  max-width: 380px;
+  border: 1px solid rgba(245,166,35,0.3);
+}
+
+.login-logo {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 14px;
+}
+
+.login-logo img {
+  width: 64px;
+  height: 64px;
+  object-fit: contain;
 }
 
 h2 {
-    text-align: center;
-    color: #333;
-    margin-bottom: 0.5rem;
+  text-align: center;
+  color: #0a1e6e;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 900;
+  font-size: 1.3rem;
+  letter-spacing: 2px;
+  margin-bottom: 4px;
 }
 
 p {
-    text-align: center;
-    color: #666;
-    font-size: 0.9rem;
-    margin-bottom: 2rem;
+  text-align: center;
+  color: #64748b;
+  font-size: 0.78rem;
+  margin-bottom: 24px;
 }
 
-/* Input Styling */
-.input-group {
-    margin-bottom: 1.5rem;
-}
+.input-group { margin-bottom: 16px; }
 
 .input-group label {
-    display: block;
-    margin-bottom: 0.5rem;
-    color: #555;
-    font-weight: 600;
+  display: block;
+  margin-bottom: 5px;
+  color: #374151;
+  font-weight: 700;
+  font-size: 0.72rem;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
 }
 
 .input-group input {
-    width: 100%;
-    padding: 0.75rem;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    outline: none;
-    transition: border-color 0.3s;
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid #d1d5db;
+  border-radius: 7px;
+  font-size: 0.88rem;
+  color: #111827;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
 }
 
 .input-group input:focus {
-    border-color: #007bff;
+  border-color: #1a237e;
+  box-shadow: 0 0 0 3px rgba(26,35,126,0.12);
 }
 
-/* Button Styling */
+.login-error {
+  background: #fee2e2;
+  border: 1px solid #fca5a5;
+  color: #dc2626;
+  border-radius: 6px;
+  padding: 8px 12px;
+  font-size: 0.75rem;
+  margin-bottom: 12px;
+}
+.login-error.hidden { display: none; }
+
 .login-btn {
-    width: 100%;
-    padding: 0.75rem;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    font-size: 1rem;
-    font-weight: bold;
-    cursor: pointer;
-    transition: background-color 0.3s;
+  width: 100%;
+  padding: 11px;
+  background: linear-gradient(135deg, #1a237e, #0f1e5c);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  font-weight: 800;
+  font-family: 'Montserrat', sans-serif;
+  letter-spacing: 2px;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+  box-shadow: 0 4px 14px rgba(10,30,110,0.35);
 }
 
-.login-btn:hover {
-    background-color: #0056b3;
-}
+.login-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(10,30,110,0.45); }
+.login-btn:disabled { opacity: 0.65; cursor: not-allowed; transform: none; }
 
-/* Footer Links */
-.form-footer {
-    margin-top: 1.5rem;
-    text-align: center;
-}
-
-.form-footer a {
-    color: #007bff;
-    text-decoration: none;
-    font-size: 0.85rem;
-}
-
-.form-footer a:hover {
-    text-decoration: underline;
-}
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800;900&display=swap');
