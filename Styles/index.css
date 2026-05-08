@@ -1,118 +1,147 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Montserrat:wght@700;800;900&display=swap');
+
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
 
 body {
   min-height: 100vh;
-  background: #0a1e6e url('../Assets/BGTithes.png') center/cover no-repeat fixed;
+  background: linear-gradient(135deg, #1565c0 0%, #1976d2 40%, #1e88e5 70%, #42a5f5 100%);
   display: flex;
   justify-content: center;
   align-items: center;
+  overflow: hidden;
+  position: relative;
 }
 
-body::before {
+/* Decorative blobs */
+body::before, body::after {
   content: '';
   position: fixed;
-  inset: 0;
-  background: rgba(10,30,110,0.6);
+  border-radius: 50%;
+  background: rgba(255,255,255,0.08);
+  pointer-events: none;
+}
+body::before {
+  width: 420px; height: 420px;
+  top: -120px; left: -100px;
+}
+body::after {
+  width: 320px; height: 320px;
+  bottom: -80px; right: -80px;
+}
+
+.blob {
+  position: fixed;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.07);
+  pointer-events: none;
   z-index: 0;
 }
+.blob-1 { width: 200px; height: 200px; bottom: 80px; left: 60px; }
+.blob-2 { width: 140px; height: 140px; top: 100px; right: 120px; }
+.blob-3 { width: 90px;  height: 90px;  top: 50%;   left: 8%;    }
 
 .login-container {
   position: relative;
   z-index: 1;
-  background: rgba(255,255,255,0.97);
-  padding: 36px 32px 28px;
-  border-radius: 14px;
-  box-shadow: 0 16px 48px rgba(0,0,0,0.45);
+  background: rgba(255,255,255,0.15);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  padding: 40px 36px 32px;
+  border-radius: 20px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.25);
   width: 100%;
-  max-width: 380px;
-  border: 1px solid rgba(245,166,35,0.3);
+  max-width: 360px;
+  border: 1px solid rgba(255,255,255,0.3);
+  text-align: center;
 }
 
 .login-logo {
   display: flex;
   justify-content: center;
-  margin-bottom: 14px;
+  margin-bottom: 10px;
 }
 
 .login-logo img {
-  width: 64px;
-  height: 64px;
+  width: 60px;
+  height: 60px;
   object-fit: contain;
+  filter: drop-shadow(0 4px 12px rgba(0,0,0,0.3));
 }
 
 h2 {
-  text-align: center;
-  color: #0a1e6e;
+  color: #fff;
   font-family: 'Montserrat', sans-serif;
   font-weight: 900;
-  font-size: 1.3rem;
-  letter-spacing: 2px;
+  font-size: 1.6rem;
+  letter-spacing: 1px;
   margin-bottom: 4px;
 }
 
 p {
-  text-align: center;
-  color: #64748b;
+  color: rgba(255,255,255,0.75);
   font-size: 0.78rem;
-  margin-bottom: 24px;
+  margin-bottom: 28px;
 }
 
-.input-group { margin-bottom: 16px; }
+.input-group { margin-bottom: 16px; text-align: left; }
 
 .input-group label {
   display: block;
-  margin-bottom: 5px;
-  color: #374151;
-  font-weight: 700;
-  font-size: 0.72rem;
-  letter-spacing: 0.5px;
-  text-transform: uppercase;
+  margin-bottom: 6px;
+  color: rgba(255,255,255,0.9);
+  font-weight: 600;
+  font-size: 0.75rem;
+  letter-spacing: 0.4px;
 }
 
 .input-group input {
   width: 100%;
-  padding: 10px 12px;
-  border: 1px solid #d1d5db;
-  border-radius: 7px;
+  padding: 11px 14px;
+  border: 1.5px solid rgba(255,255,255,0.35);
+  border-radius: 10px;
   font-size: 0.88rem;
-  color: #111827;
+  color: #fff;
+  background: rgba(255,255,255,0.15);
   outline: none;
-  transition: border-color 0.2s, box-shadow 0.2s;
+  transition: border-color 0.2s, background 0.2s, box-shadow 0.2s;
 }
 
+.input-group input::placeholder { color: rgba(255,255,255,0.5); }
+
 .input-group input:focus {
-  border-color: #1a237e;
-  box-shadow: 0 0 0 3px rgba(26,35,126,0.12);
+  border-color: rgba(255,255,255,0.7);
+  background: rgba(255,255,255,0.22);
+  box-shadow: 0 0 0 3px rgba(255,255,255,0.15);
 }
 
 .login-error {
-  background: #fee2e2;
-  border: 1px solid #fca5a5;
-  color: #dc2626;
-  border-radius: 6px;
+  background: rgba(220,38,38,0.25);
+  border: 1px solid rgba(252,165,165,0.5);
+  color: #fecaca;
+  border-radius: 8px;
   padding: 8px 12px;
   font-size: 0.75rem;
   margin-bottom: 12px;
+  text-align: left;
 }
 .login-error.hidden { display: none; }
 
 .login-btn {
   width: 100%;
-  padding: 11px;
-  background: linear-gradient(135deg, #1a237e, #0f1e5c);
-  color: #fff;
+  padding: 12px;
+  background: #fff;
+  color: #1565c0;
   border: none;
-  border-radius: 8px;
-  font-size: 0.85rem;
+  border-radius: 10px;
+  font-size: 0.88rem;
   font-weight: 800;
   font-family: 'Montserrat', sans-serif;
-  letter-spacing: 2px;
+  letter-spacing: 1.5px;
   cursor: pointer;
-  transition: transform 0.2s, box-shadow 0.2s;
-  box-shadow: 0 4px 14px rgba(10,30,110,0.35);
+  transition: transform 0.2s, box-shadow 0.2s, background 0.2s;
+  box-shadow: 0 4px 18px rgba(0,0,0,0.2);
+  margin-top: 4px;
 }
 
-.login-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(10,30,110,0.45); }
+.login-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.3); background: #f0f4ff; }
 .login-btn:disabled { opacity: 0.65; cursor: not-allowed; transform: none; }
-
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800;900&display=swap');

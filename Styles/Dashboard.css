@@ -351,7 +351,7 @@ main {
   gap: 8px;
   background: rgba(255,255,255,0.95);
   border-radius: 10px;
-  padding: 10px;
+  padding: 10px 10px 6px;
   box-shadow: 0 8px 28px rgba(0,0,0,0.35);
   border: 1px solid rgba(245,166,35,0.45);
   flex: 1;
@@ -415,7 +415,7 @@ main {
 .table-scroll-wrap {
   flex: 1;
   min-height: 0;
-  max-height: calc(100vh - 290px);
+  max-height: calc(100vh - 230px);
   overflow: auto;
   border-radius: 8px;
   border: 1px solid #c6cdd9;
@@ -432,7 +432,7 @@ main {
   width: 100%;
   border-collapse: collapse;
   color: #111827;
-  font-size: 0.78rem;
+  font-size: 0.84rem;
   background: #ffffff;
   table-layout: auto;
 }
@@ -445,10 +445,10 @@ main {
   background: #1a237e;
   color: #ffffff;
   border: 1px solid rgba(255,255,255,0.15);
-  padding: 7px 10px;
+  padding: 10px 14px;
   font-weight: 800;
   font-family: 'Montserrat', sans-serif;
-  font-size: 0.68rem;
+  font-size: 0.74rem;
   letter-spacing: 0.8px;
   text-align: center;
   white-space: nowrap;
@@ -458,10 +458,10 @@ main {
 .ncmc-data-table thead .title-row-main th {
   background: linear-gradient(135deg, #0a1e6e, #1a237e);
   color: #f5a623;
-  font-size: 0.72rem;
+  font-size: 0.78rem;
   letter-spacing: 1px;
   border-bottom: 2px solid #f5a623;
-  padding: 8px 10px;
+  padding: 10px 14px;
 }
 
 .ncmc-data-table thead .title-row-main th:first-child {
@@ -472,8 +472,8 @@ main {
 /* Sub-header row */
 .ncmc-data-table thead tr:not(.title-row-main) th {
   background: #2e3f8f;
-  font-size: 0.65rem;
-  top: 33px;
+  font-size: 0.72rem;
+  top: 37px;
 }
 
 .ncmc-data-table.ncmc-offering-table thead .title-row-main th {
@@ -492,10 +492,10 @@ main {
 /* Body cells */
 .ncmc-data-table td {
   border: 1px solid #dde3f0;
-  padding: 5px 10px;
+  padding: 8px 14px;
   text-align: right;
   white-space: nowrap;
-  font-size: 0.74rem;
+  font-size: 0.82rem;
   vertical-align: middle;
 }
 
@@ -529,10 +529,10 @@ main {
 .ncmc-data-table tfoot td {
   font-weight: 700;
   border: 1px solid #b9c8e0;
-  padding: 5px 10px;
+  padding: 8px 14px;
   text-align: right;
   white-space: nowrap;
-  font-size: 0.74rem;
+  font-size: 0.82rem;
 }
 
 .ncmc-data-table tfoot td:first-child,
@@ -542,7 +542,7 @@ main {
   background: #f0f4ff;
   color: #1e3a8a;
   font-weight: 600;
-  font-size: 0.72rem;
+  font-size: 0.8rem;
   border-color: #c5d2f0;
 }
 
@@ -551,7 +551,7 @@ main {
   color: #f5a623;
   font-family: 'Montserrat', sans-serif;
   font-weight: 900;
-  font-size: 0.72rem;
+  font-size: 0.8rem;
   letter-spacing: 0.5px;
   border-color: rgba(245,166,35,0.4);
   border-top: 2px solid #f5a623;
@@ -586,9 +586,9 @@ main {
 .pos { color: #15803d !important; font-weight: 700; }
 
 @media (max-width: 1400px) {
-  .ncmc-data-table { font-size: 0.7rem; }
+  .ncmc-data-table { font-size: 0.78rem; }
   .ncmc-data-table thead th,
-  .ncmc-data-table td { padding: 4px 7px; }
+  .ncmc-data-table td { padding: 6px 10px; }
 }
 
 .church-modal {
