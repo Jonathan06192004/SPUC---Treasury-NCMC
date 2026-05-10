@@ -8,6 +8,7 @@
   <link rel="stylesheet" href="../Styles/Settings.css"/>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Montserrat:wght@700;800;900&display=swap" rel="stylesheet"/>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="https://cdn.jsdelivr.net/npm/otpauth@9.3.6/dist/otpauth.umd.min.js"></script>
 </head>
 <body>
   <script>
@@ -77,6 +78,17 @@
             <label>New Password <span class="pw-hint">(leave blank to keep current)</span></label>
             <input type="password" id="fPassword" placeholder="Enter new password"/>
           </div>
+          <div class="form-divider"></div>
+          <div class="form-row form-row-full">
+            <label>Two-Factor Authentication</label>
+            <div class="twofa-status">
+              <div class="twofa-indicator">
+                <span class="status-dot" id="statusDot"></span>
+                <span id="statusText">Disabled</span>
+              </div>
+              <div class="twofa-actions" id="twoFaActions"></div>
+            </div>
+          </div>
         </div>
 
         <div class="save-feedback hidden" id="saveFeedback"></div>
@@ -99,86 +111,27 @@
       <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9.5L12 3l9 6.5V20a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9.5z"/><polyline points="9 21 9 12 15 12 15 21"/></svg>
       <span>Home</span>
     </button>
+    <button class="bottom-nav-btn" onclick="location.href='Churches.html'">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+      <span>Churches</span>
+    </button>
     <button class="bottom-nav-btn active">
       <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
       <span>Settings</span>
     </button>
   </nav>
 
-  <script>
-    const SUPABASE_URL  = 'https://fczudbtgtpkxteppckwb.supabase.co';
-    const SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZjenVkYnRndHBreHRlcHBja3diIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzc5NzczMzEsImV4cCI6MjA5MzU1MzMzMX0.AZKGqLFVB-VpBsDrg0ekOzX755t5kLfgWZPEJ92ELeU';
-    const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON);
+  <!-- 2FA Modal -->
+  <div class="modal-overlay hidden" id="modalOverlay">
+    <div class="modal-box" id="modalBox">
+      <div class="modal-header">
+        <h3 id="modalTitle">Enable Two-Factor Authentication</h3>
+      </div>
+      <div class="modal-body" id="modalBody"></div>
+      <div class="modal-footer" id="modalFooter"></div>
+    </div>
+  </div>
 
-    const session = JSON.parse(sessionStorage.getItem('ncmc_user'));
-
-    async function loadProfile() {
-      const { data, error } = await sb
-        .from('mission_users')
-        .select('id, username, full_name, email, phone, mission_id')
-        .eq('id', session.id)
-        .single();
-
-      if (error || !data) return;
-
-      const initials = (data.full_name || data.username || '?').charAt(0).toUpperCase();
-      document.getElementById('profileAvatar').textContent   = initials;
-      document.getElementById('profileName').textContent     = data.full_name || '—';
-      document.getElementById('profileUsername').textContent = '@' + data.username;
-
-      document.getElementById('fUsername').value = data.username  || '';
-      document.getElementById('fFullName').value = data.full_name || '';
-      document.getElementById('fEmail').value    = data.email     || '';
-      document.getElementById('fPhone').value    = data.phone     || '';
-    }
-
-    async function saveProfile() {
-      const btn       = document.getElementById('btnSave');
-      const username  = document.getElementById('fUsername').value.trim();
-      const full_name = document.getElementById('fFullName').value.trim();
-      const email     = document.getElementById('fEmail').value.trim();
-      const phone     = document.getElementById('fPhone').value.trim();
-      const password  = document.getElementById('fPassword').value;
-
-      if (!username) { showFeedback('Username cannot be empty.', 'error'); return; }
-
-      btn.disabled = true;
-      btn.textContent = 'Saving…';
-
-      const payload = { username, full_name, email, phone, updated_at: new Date().toISOString() };
-      if (password) payload.password_hash = password;
-
-      const { error } = await sb.from('mission_users').update(payload).eq('id', session.id);
-
-      btn.disabled = false;
-      btn.textContent = 'Save Changes';
-
-      if (error) { showFeedback(error.message, 'error'); return; }
-
-      const updated = { ...session, username, full_name };
-      sessionStorage.setItem('ncmc_user', JSON.stringify(updated));
-
-      document.getElementById('fPassword').value = '';
-      document.getElementById('profileName').textContent     = full_name || '—';
-      document.getElementById('profileUsername').textContent = '@' + username;
-      document.getElementById('profileAvatar').textContent   = (full_name || username).charAt(0).toUpperCase();
-
-      showFeedback('Profile updated successfully!', 'success');
-    }
-
-    function showFeedback(msg, type) {
-      const el = document.getElementById('saveFeedback');
-      el.textContent = msg;
-      el.className = 'save-feedback ' + type;
-      setTimeout(() => el.classList.add('hidden'), 3500);
-    }
-
-    function logout() {
-      sessionStorage.removeItem('ncmc_user');
-      location.replace('../index.html');
-    }
-
-    loadProfile();
-  </script>
+  <script src="../Script/Settings.js"></script>
 </body>
 </html>

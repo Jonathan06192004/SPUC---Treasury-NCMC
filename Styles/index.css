@@ -83,7 +83,9 @@ p {
   margin-bottom: 28px;
 }
 
-.input-group { margin-bottom: 16px; text-align: left; }
+.input-group { text-align: left; transition: all 0.3s ease; }
+
+.input-wrapper { margin-bottom: 16px; }
 
 .input-group label {
   display: block;
@@ -112,6 +114,21 @@ p {
   border-color: rgba(255,255,255,0.7);
   background: rgba(255,255,255,0.22);
   box-shadow: 0 0 0 3px rgba(255,255,255,0.15);
+}
+
+.code-input {
+  text-align: center;
+  letter-spacing: 8px;
+  font-size: 1.2rem !important;
+  font-weight: 700;
+  font-family: 'Courier New', monospace !important;
+}
+
+.helper-text {
+  font-size: 0.7rem;
+  color: rgba(255,255,255,0.6);
+  margin-top: 6px;
+  text-align: center;
 }
 
 .login-error {
@@ -145,3 +162,22 @@ p {
 
 .login-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.3); background: #f0f4ff; }
 .login-btn:disabled { opacity: 0.65; cursor: not-allowed; transform: none; }
+
+.login-btn-secondary {
+  width: 100%;
+  padding: 10px;
+  background: rgba(255,255,255,0.15);
+  color: #fff;
+  border: 1.5px solid rgba(255,255,255,0.35);
+  border-radius: 10px;
+  font-size: 0.82rem;
+  font-weight: 700;
+  font-family: 'Montserrat', sans-serif;
+  letter-spacing: 1px;
+  cursor: pointer;
+  transition: background 0.2s, border-color 0.2s;
+  margin-top: 8px;
+}
+.login-btn-secondary:hover { background: rgba(255,255,255,0.22); border-color: rgba(255,255,255,0.5); }
+
+.hidden { display: none !important; }
