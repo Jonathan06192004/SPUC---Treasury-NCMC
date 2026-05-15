@@ -157,6 +157,34 @@ function renderTables() {
       <td class="${pctClass}">${variancePct >= 0 ? '' : '('}${Math.abs(variancePct)}%${variancePct >= 0 ? '' : ')'}</td>
     </tr>`;
   }).join('');
+
+  // Populate tithes tfoot totals
+  const tTotal2026 = Object.values(districtTithes).reduce((s, d) => s + d.y2026, 0);
+  const tTotal2025 = Object.values(districtTithes).reduce((s, d) => s + d.y2025, 0);
+  const tVariance  = tTotal2026 - tTotal2025;
+  const tPct       = tTotal2025 > 0 ? ((tVariance / tTotal2025) * 100).toFixed(0) : 0;
+  const tTotalChurches = Object.values(districtTithes).reduce((s, d) => s + d.churches, 0);
+  const tVarClass  = tVariance >= 0 ? 'pos' : 'neg';
+  document.getElementById('tfootTithe2026').textContent    = currency.format(tTotal2026);
+  document.getElementById('tfootTithe2025').textContent    = currency.format(tTotal2025);
+  document.getElementById('tfootTitheVariance').textContent = (tVariance >= 0 ? '' : '(') + currency.format(Math.abs(tVariance)) + (tVariance >= 0 ? '' : ')');
+  document.getElementById('tfootTitheVariance').className  = tVarClass;
+  document.getElementById('tfootTithePct').textContent     = (tPct >= 0 ? '' : '(') + Math.abs(tPct) + '%' + (tPct >= 0 ? '' : ')');
+  document.getElementById('tfootTithePct').className       = tVarClass;
+  document.getElementById('tfootTitheChurches').textContent = tTotalChurches;
+
+  // Populate offerings tfoot totals
+  const oTotal2026 = Object.values(districtOfferings).reduce((s, d) => s + d.y2026, 0);
+  const oTotal2025 = Object.values(districtOfferings).reduce((s, d) => s + d.y2025, 0);
+  const oVariance  = oTotal2026 - oTotal2025;
+  const oPct       = oTotal2025 > 0 ? ((oVariance / oTotal2025) * 100).toFixed(0) : 0;
+  const oVarClass  = oVariance >= 0 ? 'pos' : 'neg';
+  document.getElementById('tfootOffer2026').textContent    = currency.format(oTotal2026);
+  document.getElementById('tfootOffer2025').textContent    = currency.format(oTotal2025);
+  document.getElementById('tfootOfferVariance').textContent = (oVariance >= 0 ? '' : '(') + currency.format(Math.abs(oVariance)) + (oVariance >= 0 ? '' : ')');
+  document.getElementById('tfootOfferVariance').className  = oVarClass;
+  document.getElementById('tfootOfferPct').textContent     = (oPct >= 0 ? '' : '(') + Math.abs(oPct) + '%' + (oPct >= 0 ? '' : ')');
+  document.getElementById('tfootOfferPct').className       = oVarClass;
 }
 
 function setTableTab(tab) {
